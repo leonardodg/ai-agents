@@ -1,13 +1,28 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import Navbar from "~/components/Navbar";
+import Welcome from "~/components/Welcome";
+import Chat from "~/components/Chat";
+
+
+import { FaBeer } from 'react-icons/fa';
+import { DiJsBadge } from "react-icons/di";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Customer AI Agent" },
+    { name: "description", content: "Welcome AI Agent in React Router!" },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  return <main className="bg-[url('/images/background_Friendly_Robot.jpg')] bg-cover">
+          <Navbar />
+
+           <h3 className="flex justify-center" > Lets go for a <FaBeer />? <DiJsBadge /> </h3>
+        
+
+          <Welcome />
+          <Chat />
+
+        </main>;
 }
