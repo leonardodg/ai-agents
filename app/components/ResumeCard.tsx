@@ -5,7 +5,7 @@ import ScoreCircle from "./ScoreCircle"
 const ResumeCard = ({ resume: { id, companyName, jobTitle, feedback, imagePath } }: { resume: Resume}) => {
     return (
 
-        <Link to={`/resumind/${id}`} className="resume-card animate-in fade-in duration-1000 mx-auto p-4 bg-white bg-opacity-80 rounded-lg shadow-md my-4 block hover:bg-blue-50 transition"> 
+        <Link to={`/resumind/resume/${id}`} className="resume-card animate-in fade-in duration-1000 mx-auto p-4 bg-white bg-opacity-80 rounded-lg shadow-md my-4 block hover:bg-blue-50 transition"> 
                 
             <div key={id} className="resume-card-header">
                 <div className="flex flex-col gap-2">

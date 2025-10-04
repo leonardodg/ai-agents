@@ -16,13 +16,10 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
   return <main className="bg-[url('/images/background_Friendly_Robot.jpg')] bg-cover">
-          <Navbar />
+            <Navbar />
+            <Welcome />
+            <Chat />
 
-           <h3 className="flex justify-center" > Lets go for a <FaBeer />? <DiJsBadge /> </h3>
-        
-
-          <Welcome />
-          <Chat />
-
+            <h3 className="flex justify-center" > Lets go for a <FaBeer />? </h3>
         </main>;
 }

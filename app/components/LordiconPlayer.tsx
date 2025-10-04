@@ -36,16 +36,34 @@ const LordiconPlayer = forwardRef<any, Props>((props, ref) => {
 
     // if iconUrl provided, fetch JSON on client only
     if (iconUrl) {
-      fetch(iconUrl)
-        .then((r) => r.json())
+      // Resolve against Vite/host base URL so "/icons/..." works when the app
+      // is served from a subpath. import.meta.env may be undefined in some
+      // environments so cast to any.
+      const base = (typeof (import.meta as any)?.env?.BASE_URL === 'string')
+        ? (import.meta as any).env.BASE_URL
+        : '/';
+      const resolvedPath = typeof iconUrl === 'string' && iconUrl.startsWith('/')
+        ? `${base.replace(/\/$/, '')}/${iconUrl.replace(/^\//, '')}`
+        : (iconUrl as string);
+
+      console.debug('[LordiconPlayer] fetching icon JSON from', resolvedPath);
+
+      fetch(resolvedPath)
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
+          return r.json();
+        })
         .then((data) => {
           if (mounted) {
-            console.debug('[LordiconPlayer] icon JSON fetched', data && data.nm);
+            console.debug('[LordiconPlayer] icon JSON fetched', data && (data as any).nm);
             setResolvedIcon(data);
             setIconLoaded(true);
           }
         })
-        .catch((err) => console.warn('Failed to fetch icon JSON:', err));
+        .catch((err) => {
+          console.warn('Failed to fetch icon JSON:', err);
+          if (mounted) setLoadError(String(err));
+        });
     }
 
     return () => {
@@ -71,8 +89,6 @@ const LordiconPlayer = forwardRef<any, Props>((props, ref) => {
       </div>
     );
   }
-
-
 
   const handleMouseEnter = () => {
     if (!hover) return;
