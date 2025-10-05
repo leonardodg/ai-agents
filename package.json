@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
+  "build": "react-router build",
+  "build:spa": "react-router build && node ./scripts/generate-spa-index.js",
+  "build:env": "node ./scripts/build-wrapper.js",
     "dev": "react-router dev --host --port 8081",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
